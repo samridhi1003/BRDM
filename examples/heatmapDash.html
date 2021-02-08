@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html  lang="en" class="perfect-scrollbar-on">
+  <head>
+    <title>Heatmaps</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet">
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <!-- <link href="../assets/demo/demo.css" rel="stylesheet" /> -->
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2Awf-eRJqiq0W24r8bA3D2AwVYc8UYu8&callback=initMap&libraries=visualization&v=weekly">
+    defer
+    </script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+      
+        width:1080px;
+        height: 610px;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #head {
+        position: absolute;
+        top: 5px;
+        left: 40%;
+        z-index: 5;
+        margin: 5px;
+        border-radius:15px;
+        width: 200px;
+       color:white;
+        padding: 5px;
+        background-color: #9c27b0;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+        margin-bottom: 0px;
+      }
+
+      #floating-panel {
+        background-color: none;
+
+        left: 83%;
+        border:none;
+        padding: 5px;
+        position: absolute;
+        top: 30%;
+        z-index: 5;
+         font-family: "Roboto",Arial, "Helvetica Neue", Helvetica, sans-serif;
+      }
+      .btn
+      {
+        background-color: #9c27b0;
+        color: #fff;
+        width: 180px;
+      }
+    </style>
+     <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script>
+      "use strict";
+    var map, heatmap;
+      var firebaseConfig = {
+    apiKey: "AIzaSyDqBk-udpuia0lTR7c8NRUWJb9Y3uPvM_c",
+    authDomain: "brdm-bus-service.firebaseapp.com",
+    databaseURL: "https://brdm-bus-service.firebaseio.com",
+    projectId: "brdm-bus-service",
+    storageBucket: "brdm-bus-service.appspot.com",
+    messagingSenderId: "680196580992",
+    appId: "1:680196580992:web:36b25d191229d699e4e865",
+    measurementId: "G-6M4PYQC9KR"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  console.log(firebaseConfig);
+
+  var firestore=firebase.firestore();
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 11,
+          center: {
+            lat: 12.972442,
+            lng: 	77.580643
+          },
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+      
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: [],
+          map: map
+        });
+      }
+      firestore.collection("CV_TrafficData").doc("2020-09-08 ~ First_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+    firestore.collection("CV_TrafficData").doc("2020-09-08 ~ First_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+    firestore.collection("CV_TrafficData").doc("2020-09-08 ~ Second_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+    firestore.collection("CV_TrafficData").doc("2020-09-08 ~ Third_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+        firestore.collection("CV_TrafficData").doc("2020-09-08 ~ Third_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+    
+    firestore.collection("CV_TrafficData").doc("2020-09-08 ~ Fourth_device")
+            .onSnapshot(function(doc) {
+        var score=doc.data().score;
+        var shift=0;
+        var point;
+      while((score/3 )>0)
+      {
+        if(score>30)
+        {
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+        }
+          point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+          heatmap.getData().push(point); 
+          if(score>50)
+          {
+          point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon+shift);
+          heatmap.getData().push(point); 
+          point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+          heatmap.getData().push(point); 
+          }
+          score-=3;
+          shift+=0.0001;
+      }
+    });
+    
+//  firestore.collection("/CV_TrafficData").onSnapshot(function(querySnapshot) {
+//         var lats = [];
+//         querySnapshot.forEach(function(doc) {
+//          // datas.push((new google.maps.LatLng(doc.data().lat,doc.data().lng)));
+//          var score=doc.data().score;
+//          var shift=0,point;
+//          for(var i=0;i<score/5;i++)
+//          {
+          
+           
+//            point=new google.maps.LatLng(doc.data().lat,doc.data().lon+shift);
+//          heatmap.getData().push(point);
+//           point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon);
+//          heatmap.getData().push(point);
+//           point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon);
+//          heatmap.getData().push(point);
+//           point=new google.maps.LatLng(doc.data().lat,doc.data().lon-shift);
+//          heatmap.getData().push(point);
+           
+//           point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon+shift);
+//          heatmap.getData().push(point);
+//          var point=new google.maps.LatLng(doc.data().lat+shift,doc.data().lon-shift);
+//          heatmap.getData().push(point);
+//           point=new google.maps.LatLng(doc.data().lat+-shift,doc.data().lon+shift);
+//          heatmap.getData().push(point);
+//           point=new google.maps.LatLng(doc.data().lat-shift,doc.data().lon-shift);
+//          heatmap.getData().push(point);
+//             lats.push(doc.data().lat);
+//             shift+=0.000001;
+//          }
+//         });
+//         console.log("Current lat ", lats.join(", "));
+//     });
+
+  function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+      }
+
+      function changeGradient() {
+        const gradient = [
+          "rgba(0, 255, 255, 0)",
+          "rgba(0, 255, 255, 1)",
+          "rgba(0, 191, 255, 1)",
+          "rgba(0, 127, 255, 1)",
+          "rgba(0, 63, 255, 1)",
+          "rgba(0, 0, 255, 1)",
+          "rgba(0, 0, 223, 1)",
+          "rgba(0, 0, 191, 1)",
+          "rgba(0, 0, 159, 1)",
+          "rgba(0, 0, 127, 1)",
+          "rgba(63, 0, 91, 1)",
+          "rgba(127, 0, 63, 1)",
+          "rgba(191, 0, 31, 1)",
+          "rgba(255, 0, 0, 1)"
+        ];
+        heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+      }
+
+      function changeRadius() {
+        heatmap.set("radius", heatmap.get("radius") ? null : 15);
+      }
+
+      function changeOpacity() {
+        heatmap.set("opacity", heatmap.get("opacity") ? null : 0.2);
+      } 
+    </script>
+  </head>
+  <body class="dark-edition">
+
+    <div class="wrapper ">
+      <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+      
+        <div class="logo"><a href="https://www.google.com/maps/place/Bengaluru,+Karnataka/@12.9538477,77.3507288,10z/data=!3m1!4b1!4m5!3m4!1s0x3bae1670c9b44e6d:0xf8dfc3e8517e4fe0!8m2!3d12.9715987!4d77.5945627" class="simple-text logo-normal">
+           BRDM
+          </a></div>
+        <div class="sidebar-wrapper ps-container ps-theme-default" data-ps-id="ed8c4c0e-9d4b-c96d-5230-05fa24a4a7e6">
+           
+              <ul class="nav">
+                <li class="nav-item ">
+           
+              <a class="nav-link" href="index.html">
+                <i class="material-icons">dashboard</i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+      
+          <li class="nav-item ">
+            <a class="nav-link" href="markermove.html">
+              <i class="material-icons">directions_bus</i>
+              <p>Live Tracking</p>
+            </a>
+          </li>
+          <li class="nav-item active  ">
+            <a class="nav-link" href="heatmapDash.html">
+              <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+              <p>HeatMap</p>
+            </a>
+          </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="driver.html">
+                <i class="fas fa-user-tie" aria-hidden="true"></i>
+                <p>Drivers</p>
+              </a>
+            </li>
+           
+            <li class="nav-item ">
+              <a class="nav-link" href="stats.html">
+                <i class="material-icons">account_tree</i>
+                <p>Connectivity Index</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="./notifications.html">
+                <i class="material-icons">notifications</i>
+                <p>Survey</p>
+              </a>
+            </li>
+            <li class="nav-item  ">
+              <a class="nav-link" href="user.html">
+                <i class="material-icons">person</i>
+                <p>user</p>
+              </a>
+            </li>
+            <!-- <li class="nav-item active-pro ">
+                  <a class="nav-link" href="./upgrade.html">
+                      <i class="material-icons">unarchive</i>
+                      <p>Upgrade to PRO</p>
+                  </a>
+              </li> -->
+          </ul>
+  </div>
+      <div class="sidebar-background" style="background-image: url(../assets/img/sidebar-2.jpg) "></div></div>
+    <div class="main-panel">
+      <div >
+        <div class="container-fluid">
+        <div id="head">Traffic Congestion</div>
+    <div id="floating-panel">
+      <button class="btn" onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button class="btn" onclick="changeGradient()">Change gradient</button>
+      <button class="btn" onclick="changeRadius()">Change radius</button>
+      <button class="btn" onclick="changeOpacity()">Change opacity</button>
+    </div>
+    <div id="map"></div>
+        </div>
+        </div>
+  </div>
+  </body>
+</html>

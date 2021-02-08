@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+	<link rel="stylesheet" type="text/css" href="app.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+				<div class= "container">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">BRDM</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+      	<li><button onclick = "signOut()" id = "signOut" class="btn btn-default btn-md " > signout</button></li>
+        
+        <li><button onclick="googleform()" id="google" class="btn btn-default btn-md"> GoogleSubmit</button></li>
+      </ul>
+   
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+	
+	<div id="content"> 
+		<h1> BRDM</h1>
+              
+                    <h4>To Travel Hopefully Is a Better Thing Than To Arrive</h4>
+                    <hr>
+		
+		<input type="email" placeholder= "email" id="email" >
+		
+		<input type="password" placeholder= "password" id="password">
+		<br>
+		<button onclick = "signUp()" id = "signUp" class="btn btn-primary btn-md"> signup</button>
+		<button onclick = "signIn()" id = "signIn" class="btn btn-primary btn-md"> signin</button>
+		<!-- <button onclick = "signOut()" id = "signOut" class="btn btn-primary btn-md" > signout</button> -->
+		<!-- <br>
+		<button onclick="googleform()" id="google" class="btn btn-primary btn-md"> GoogleSubmit</button>
+  -->
+	</div>
+
+</body>
+</html>

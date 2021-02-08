@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="perfect-scrollbar-on"><head>
+  <meta charset="utf-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>
+   DRBM
+  </title>
+  <script src="app.js"></script>
+
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet">
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <!-- <link href="../assets/demo/demo.css" rel="stylesheet" /> -->
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script><link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+</head>
+
+<body class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+    
+      <div class="logo"><a href="https://www.google.com/maps/place/Bengaluru,+Karnataka/@12.9538477,77.3507288,10z/data=!3m1!4b1!4m5!3m4!1s0x3bae1670c9b44e6d:0xf8dfc3e8517e4fe0!8m2!3d12.9715987!4d77.5945627" class="simple-text logo-normal">
+         BRDM
+        </a></div>
+      <div class="sidebar-wrapper ps-container ps-theme-default" data-ps-id="ed8c4c0e-9d4b-c96d-5230-05fa24a4a7e6">
+         
+            <ul class="nav">
+          <li class="nav-item   ">
+            <a class="nav-link" href="index.html">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+        
+        
+        <li class="nav-item ">
+          <a class="nav-link" href="markermove.html">
+            <i class="material-icons">directions_bus</i>
+            <p>Live Tracking</p>
+          </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="heatmapDash.html">
+            <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+            <p>HeatMap</p>
+          </a>
+        </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="driver.html">
+              <i class="fas fa-user-tie" aria-hidden="true"></i>
+              <p>Drivers</p>
+            </a>
+          </li>
+      
+          <li class="nav-item active">
+            <a class="nav-link" href="stats.html">
+
+              <i class="material-icons">account_tree</i>
+              <p>Connectivity Index</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="notifications.html">
+              <i class="material-icons">notifications</i>
+              <p>Survey</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="user.html">
+              <i class="material-icons">person</i>
+              <p>user</p>
+            </a>
+          </li>
+          <!-- <li class="nav-item active-pro ">
+               
+            <a class="nav-link" href="./upgrade.html">
+                    <i class="material-icons">unarchive</i>
+                    <p>Upgrade to PRO</p>
+                </a>
+            </li> -->
+        </ul>
+</div>
+    <div class="sidebar-background" style="background-image: url(../assets/img/sidebar-2.jpg) "></div></div>
+    <div class="main-panel ps-container ps-theme-default ps-active-y" data-ps-id="8bbbbc8b-4fb7-f532-7b41-f89aeff341cb">
+    <div class="main-panel">
+      <!-- Navbar -->
+      <div class="row">
+        
+        <div class="content">
+
+        <div class="container-fluid">
+          <!-- your content here -->
+           <!-- <div class="col-xl-3 col-lg-12">  -->
+          <!-- <div class="table-responsive"> -->
+
+      
+          
+          
+            <button class="btn btn-danger btn-md active" id="depots">DEPOTS PER DIVISION</button>
+              <button class="btn btn-warning btn-md active" id="a+"> GRADE A+</button>
+              <button class="btn btn-success btn-md active" id="a">GRADE A</button>
+              <button class="btn btn-danger btn-md active" id="b+">GRADE B+</button> 
+              <button class="btn btn-active btn-md active" id="b" >GRADE B</button>
+              <button class="btn btn-success btn-md active" id="c+">GRADE C+</button> 
+              <button class="btn btn-active btn-md active" id="c">GRADE C</button> 
+              <button class="btn btn-danger btn-md active" id="d+">GRADE D+</button> 
+              <button class="btn btn-warning btn-md active" id="d">GRADE D</button>  
+              <button class="btn btn-danger btn-md active" id="busy">Busiest Route</button>  
+      
+              
+            
+      
+    <!-- </div> -->
+   </div>
+
+          <div class="col-xl-8 col-lg-12" id="outer">
+              <div class="card card-chart" id="cardsize" >
+                <div class="card-header card-header-default" id="header">
+                  <div class="ct-chart" id="dailySalesChart"><img src="../assets/img/bus_divisions.jpeg" id="imgs"></div>
+                
+                <div class="card-body">
+                  <h4 id="des" class="card-title">Buses Per Divisions</h4>
+                  <p   class="card-category">
+                   
+                     <div id="content" >Highest Buses :North Division<br>
+                   Lowest Buses :Central Division</div> </p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons"></i> 
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+     <!--  <footer class="footer">
+        <div class="container-fluid">
+          <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                  </div>
+                </div>
+
+        </div>
+      </footer> -->
+    </div>
+  </div>
+
+      </div>
+      
+  <!--   Core JS Files   -->
+  <script src="./assets/js/core/jquery.min.js"></script>
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="https://unpkg.com/default-passive-events"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chartist JS -->
+  <script src="./assets/js/plugins/chartist.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="./assets/js/material-dashboard.js?v=2.1.0"></script>
+  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+  <script src="./assets/demo/demo.js"></script>
+  <script src="cindex.js"></script>
+</body>
+
+</html>

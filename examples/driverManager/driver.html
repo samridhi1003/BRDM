@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Driver Manager</title>
+  <!-- BOOTSTRAP   -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+  <!-- css file link  -->
+ <link rel="stylesheet" type="text/css" href="driver.css">
+ <!-- firebase     link  -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<a href="#" class="btn btn-primary btn-lg active"  id="logout" >Driver Manager</a>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <a class="navbar-brand" href="#"><button class="btn btn-secondary btn-md" id="logout"> LOGOUT</button></a>
+         <a class="navbar-brand" href="#"><button class="btn btn-secondary btn-md" id="logout"> HOME</button></a>
+      </ul>
+      <br>
+	<div>
+		<br>
+		<!-- <a href="#" class="btn btn-warning btn-md active" role="button">Search Driver</a> -->
+		<!-- <input type="text" placeholder="Search" > -->
+		<form class="form-inline">
+		  <div class="form-group">
+		    <label for="exampleInputName2" class="btn btn-default btn-md active">Driver Name</label>
+		    <input type="text" class="form-control" id="exampleInputName2" placeholder="Search" >
+		  </div>
+		  	<span>	           </span>
+		  <div class="form-group">
+		    <label for="exampleInputEmail2" class="btn btn-default btn-md active">Email</label>
+		    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+		  </div>
+		  <button type="button" class="btn btn-warning btn-md active" id="submit">Search</button>
+		</form>
+		<p align="right">
+		  <a  href="form.html"><button class="btn btn-danger btn-md" > ADD DRIVER</button></a>
+		</p>
+		<div class="table-responsive">
+
+			
+  				
+          <table class="table table-bordered table-hover" id="Table">
+            
+          </table>
+          
+			
+		</div>
+		
+	</div>
+
+	</div>
+		
+	<script>
+
+</script>
+
+    
+<script type="text/javascript" src="driver.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="addDriver.html"></script> -->
+</body>
+</html>

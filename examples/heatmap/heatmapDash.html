@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heatmaps</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2Awf-eRJqiq0W24r8bA3D2AwVYc8UYu8&callback=initMap&libraries=visualization&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
+    </style>
+     <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script>
+      "use strict";
+ 
+      // This example requires the Visualization library. Include the libraries=visualization
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2Awf-eRJqiq0W24r8bA3D2AwVYc8UYu8&libraries=visualization">
+      let map, heatmap;
+      var firebaseConfig = {
+    apiKey: "AIzaSyDqBk-udpuia0lTR7c8NRUWJb9Y3uPvM_c",
+    authDomain: "brdm-bus-service.firebaseapp.com",
+    databaseURL: "https://brdm-bus-service.firebaseio.com",
+    projectId: "brdm-bus-service",
+    storageBucket: "brdm-bus-service.appspot.com",
+    messagingSenderId: "680196580992",
+    appId: "1:680196580992:web:36b25d191229d699e4e865",
+    measurementId: "G-6M4PYQC9KR"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  console.log(firebaseConfig);
+
+  var firestore=firebase.firestore();
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 8,
+          center: {
+            lat: 13.3156476,
+            lng: 77.74788111
+          },
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+      
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: [],
+          map: map
+        });
+      }
+       // Your web app's Firebase configuration
+
+  // var ref=firestore.collection('places').doc('2RtSp4kArSMvdBHEIXRT');
+ 
+//console.log(ref.get().data().lat);
+
+ // var places = firestore.collection('places');
+ firestore.collection("heatmap").onSnapshot(function(querySnapshot) {
+        var lats = [];
+        querySnapshot.forEach(function(doc) {
+         // datas.push((new google.maps.LatLng(doc.data().lat,doc.data().lng)));
+         var point=new google.maps.LatLng(doc.data().lat,doc.data().lng);
+         heatmap.getData().push(point);
+            lats.push(doc.data().lat);
+        });
+        console.log("Current lat ", lats.join(", "));
+    });
+//   firestore.collection("places").get().then(function(querySnapshot) { 
+//     querySnapshot.forEach(function(doc) 
+//   { 
+//     datas.push((new google.maps.LatLng(doc.data().lat,doc.data().lng)));
+//     // console.log(doc.id, " => ", doc.data());
+//     });
+// });
+// Get that click from firebase.
+// places.orderByChild('places').on('child_added',
+//  function(snapshot) {
+//    var newPosition = snapshot.val();
+//    var point = new google.maps.LatLng(newPosition.lat, newPosition.lng);
+//    heatmap.getData().push(point);
+//  }
+//);    
+
+  // function getPoints(lat,lng) {
+  //   var data=[];
+  //   data.push(new google.maps.LatLng(lat, lng));
+  //   return data;
+  // }
+     
+  function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+      }
+
+      function changeGradient() {
+        const gradient = [
+          "rgba(0, 255, 255, 0)",
+          "rgba(0, 255, 255, 1)",
+          "rgba(0, 191, 255, 1)",
+          "rgba(0, 127, 255, 1)",
+          "rgba(0, 63, 255, 1)",
+          "rgba(0, 0, 255, 1)",
+          "rgba(0, 0, 223, 1)",
+          "rgba(0, 0, 191, 1)",
+          "rgba(0, 0, 159, 1)",
+          "rgba(0, 0, 127, 1)",
+          "rgba(63, 0, 91, 1)",
+          "rgba(127, 0, 63, 1)",
+          "rgba(191, 0, 31, 1)",
+          "rgba(255, 0, 0, 1)"
+        ];
+        heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+      }
+
+      function changeRadius() {
+        heatmap.set("radius", heatmap.get("radius") ? null : 15);
+      }
+
+      function changeOpacity() {
+        heatmap.set("opacity", heatmap.get("opacity") ? null : 0.2);
+      } 
+    </script>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button onclick="changeGradient()">Change gradient</button>
+      <button onclick="changeRadius()">Change radius</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+    </div>
+    <div id="map"></div>
+  </body>
+</html>

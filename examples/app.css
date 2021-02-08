@@ -1,0 +1,70 @@
+body{
+	background: url("https://images.unsplash.com/photo-1534800891164-a1d96b5114e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
+	background-size: cover;
+	background-position: center;
+	font-family: 'Lato', sans-serif;
+}
+html{
+	height: 100%;
+}
+#content{
+	width: 500px;
+	text-align: center;
+	padding-top: 5%;
+    margin: 100px auto;
+	text-shadow: 1px 1px 2px black, 0 0 1em grey, 0 0 0.2em white;
+  color: white;
+  box-sizing: border-box;
+  
+}
+h1{
+	color: white;
+	font-weight: 700;
+	font-size: 2 em;
+}
+h4{
+	color: white;
+}
+input{
+	border-style: groove;
+	 box-sizing: border-box;
+	 width: 100%;
+	 height: 40px;
+	 text-align: center;
+	
+	background-color: black;
+	color: black;
+
+}
+#google{
+	width:100%;
+	border-style: outset;
+/*padding-top: 20%;*/
+
+border-top: 20%;
+/*margin-top: 50%;*/
+box-sizing: border-box;
+}
+#signUp{
+	width:50%;
+border-style: outset;
+border-top: 20%;
+
+/*margin-top:30 %;*/
+box-sizing: border-box;
+}
+#signIn{
+	border-style: outset;
+width:50%;
+border-top: 20%;
+
+box-sizing: border-box;
+}
+#signOut{
+	border-style: outset;
+width:100%;
+margin: 100 auto;
+/*border-top: 20%;*/
+
+/*box-sizing: border-box;*/
+}

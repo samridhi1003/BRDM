@@ -1,0 +1,52 @@
+
+
+#cardsize{
+	 display: grid;
+  grid-template-columns: 100% auto ;
+  grid-template-rows: 100% /*200% 200% 200% 200%  200% 200% *//*200% 200% 200%*/ auto;
+  grid-gap: 10px;
+  background-color: dark;
+  padding: 10px;
+ /* border: purple;*/
+ margin-left: 15%;
+	width: 500px; height: 80%;
+	box-sizing: content-box;
+}
+img{
+	width: 96%; height: 200%;
+	
+
+}
+#header{
+	 grid-gap: 10px;
+  background-color: purple ;
+  padding: 10px;
+
+}
+#outer{
+	 grid-gap: 5px;
+  /*background-color: #c8a1ce;*/
+  padding: 10px;
+  /*margin-left: 55%;*/
+}
+.card-header-default{
+	width: 95%;
+	 height: 100%;
+	margin: 100 auto;
+	box-sizing: border-box;
+	/*background: purple;*/
+}
+
+
+li{
+	width: 20%;
+}
+tr{
+	background: black;
+	/*width: 100 auto;*/
+	border: 3px solid lightgrey;
+}
+.content{
+	margin-right:15%;
+	padding: 0px;
+}
